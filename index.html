@@ -25,7 +25,7 @@
       background: var(--washi);
       color: var(--ink);
       font-family: 'Noto Serif JP', serif;
-      max-width: 390px;
+      max-width: 500px;
       margin: 0 auto;
       overflow-x: hidden;
     }
@@ -406,6 +406,29 @@
     .footer-date  { font-size: 13px; color: rgba(139,105,20,0.65); letter-spacing: 0.35em; margin-bottom: 40px; }
     .footer-rule  { width: 40px; height: 1px; background: rgba(139,105,20,0.25); margin: 0 auto 36px; }
     .footer-copy  { font-size: 10px; color: rgba(240,234,216,0.25); letter-spacing: 0.25em; }
+
+    /* ─── RESPONSIVE 430px〜500px ────────────────── */
+    @media (min-width: 430px) {
+      .hero-inner        { padding: 0 68px; gap: 44px; }
+      .hero-title-v      { font-size: clamp(54px, 13vw, 70px); }
+      .hero-divider-h    { height: 100px; }
+      .hero-date         { font-size: 15px; }
+      .hero-time         { font-size: 13px; }
+
+      .section           { padding: 96px 48px; }
+      .map-header        { padding: 0 48px; margin-bottom: 40px; }
+      .map-note          { padding: 24px 48px 0; font-size: 12px; }
+      .footer            { padding: 88px 48px 64px; }
+
+      .sec-title         { font-size: 30px; }
+      .memory-copy       { font-size: 15px; }
+      .rule-head         { font-size: 16px; }
+      .rule-desc         { font-size: 14px; }
+      .rule-num          { width: 38px; height: 38px; font-size: 14px; }
+      .tl-event          { font-size: 18px; }
+      .tl-detail         { font-size: 13px; }
+      .footer-title      { font-size: 20px; }
+    }
   </style>
 </head>
 <body>
@@ -467,8 +490,8 @@
     <div class="rule-item">
       <div class="rule-num">一</div>
       <div class="rule-body">
-        <p class="rule-head">東京駅を出発せよ</p>
-        <p class="rule-desc">スタートは東京駅。山手線を一周し、東京駅に戻ればゴール。</p>
+        <p class="rule-head">旅の始まりは、東京駅</p>
+        <p class="rule-desc">東京駅を出発し、山手線を一周して戻ることを目標とする</p>
       </div>
     </div>
     <div class="rule-item">
@@ -481,14 +504,14 @@
     <div class="rule-item">
       <div class="rule-num">三</div>
       <div class="rule-body">
-        <p class="rule-head">駅での滞在時間</p>
-        <p class="rule-desc">到着した駅では「サイコロの目 × 15分」滞在する。何をするかはあなた次第。</p>
+        <p class="rule-head">滞在時間もサイコロが決める</p>
+        <p class="rule-desc">到着した駅では「サイコロの目 × 15分」滞在。何をするかは自由自在。</p>
       </div>
     </div>
     <div class="rule-item">
       <div class="rule-num">四</div>
       <div class="rule-body">
-        <p class="rule-head">奇数か、偶数か</p>
+        <p class="rule-head">奇数か、偶数か選べ</p>
         <p class="rule-desc">振る前に「奇数」か「偶数」を宣言できる。的中すれば ＋2駅 進む。</p>
         <span class="rule-badge">ボーナス</span>
       </div>
