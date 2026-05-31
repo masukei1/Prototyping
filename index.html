@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>山手線双六2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --moss:       #5A9B28;
+      --moss-dark:  #1B3D09;
+      --moss-light: #74B83E;
+      --washi:      #F0EAD8;
+      --washi-dark: #E4DAC4;
+      --ink:        #1A160E;
+      --ink-mid:    #3D3226;
+      --smoke:      #7A6E5C;
+      --vermillion: #BF3A22;
+      --gold:       #8B6914;
+    }
+
+    body {
+      background: var(--washi);
+      color: var(--ink);
+      font-family: 'Noto Serif JP', serif;
+      max-width: 390px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ──────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 640px;
+      background: var(--moss-dark);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 40%, rgba(128,195,66,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 60% at 50% 80%, rgba(27,61,9,0.7) 0%, transparent 80%);
+    }
+
+    .hero-frame {
+      position: absolute;
+      inset: 20px;
+      border: 1px solid rgba(139,105,20,0.35);
+      pointer-events: none;
+    }
+    .hero-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(139,105,20,0.15);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      padding: 0 52px;
+    }
+
+    .hero-title-v {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      color: var(--washi);
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    }
+    .hero-title-v span { color: rgba(139,105,20,0.9); }
+
+    .hero-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .hero-edition {
+      writing-mode: vertical-rl;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      color: rgba(214,228,208,0.6);
+      font-weight: 300;
+    }
+
+    .hero-divider-h {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(180deg, transparent, rgba(139,105,20,0.5), transparent);
+    }
+
+    .hero-date-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .hero-date {
+      font-size: 13px;
+      color: var(--washi);
+      letter-spacing: 0.15em;
+      font-weight: 600;
+    }
+    .hero-time {
+      font-size: 11px;
+      color: rgba(214,228,208,0.6);
+      letter-spacing: 0.15em;
+      font-weight: 300;
+    }
+    .hero-start {
+      display: inline-block;
+      border: 1px solid rgba(191,58,34,0.6);
+      color: #BF3A22;
+      font-size: 10px;
+      padding: 4px 10px;
+      letter-spacing: 0.25em;
+      margin-top: 4px;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 9px;
+      letter-spacing: 0.4em;
+      color: rgba(139,105,20,0.5);
+      animation: bob 2.2s ease-in-out infinite;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(180deg, rgba(139,105,20,0.5), transparent);
+    }
+    @keyframes bob {
+      0%,100% { opacity:.5; transform: translateX(-50%) translateY(0); }
+      50%      { opacity: 1; transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── SECTION COMMON ────────────────────────── */
+    .section { padding: 80px 32px; position: relative; }
+
+    .sec-label {
+      font-size: 10px;
+      letter-spacing: 0.5em;
+      color: var(--smoke);
+      margin-bottom: 6px;
+    }
+
+    .sec-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .sec-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 36px; height: 2px;
+      background: var(--moss);
+    }
+
+    /* ─── MEMORY ────────────────────────────────── */
+    .memory { background: var(--washi-dark); overflow: hidden; }
+
+    .memory::before {
+      content: '憶';
+      position: absolute;
+      right: -12px; top: 10px;
+      font-size: 180px;
+      font-weight: 900;
+      color: rgba(128,195,66,0.07);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .memory-copy {
+      font-size: 14px;
+      line-height: 2.4;
+      color: var(--ink-mid);
+      margin-bottom: 40px;
+    }
+    .memory-copy em {
+      font-style: normal;
+      color: var(--moss);
+      font-weight: 600;
+    }
+
+    .memory-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .photo-slot {
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .photo-slot.wide { grid-column: span 2; aspect-ratio: 16/9; }
+    .photo-slot:not(.wide) { aspect-ratio: 3/4; }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .memory-caption {
+      font-size: 11px;
+      color: var(--smoke);
+      letter-spacing: 0.15em;
+      text-align: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(26,22,14,0.12);
+    }
+
+    /* ─── RULES ─────────────────────────────────── */
+    .rules { background: var(--washi); overflow: hidden; }
+
+    .rules::before {
+      content: '律';
+      position: absolute;
+      right: -12px; top: 10px;
+      font-size: 180px;
+      font-weight: 900;
+      color: rgba(128,195,66,0.06);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .rule-list { display: flex; flex-direction: column; }
+
+    .rule-item {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(26,22,14,0.09);
+      align-items: flex-start;
+    }
+    .rule-item:last-child { border-bottom: none; }
+
+    .rule-num {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      border: 1.5px solid var(--moss);
+      color: var(--moss);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .rule-body { flex: 1; }
+    .rule-head {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    .rule-desc { font-size: 13px; color: var(--smoke); line-height: 2; }
+    .rule-badge {
+      display: inline-block;
+      background: var(--moss);
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 8px;
+      letter-spacing: 0.1em;
+      margin-top: 8px;
+    }
+
+    /* ─── MAP ────────────────────────────────────── */
+    .map-sec {
+      background: var(--moss-dark);
+      padding: 80px 0 72px;
+      overflow: hidden;
+      position: relative;
+    }
+    .map-sec::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(128,195,66,0.18) 0%, transparent 70%);
+    }
+
+    .map-header {
+      padding: 0 32px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .map-header .sec-label { color: rgba(200,240,150,0.55); }
+    .map-header .sec-title { color: var(--washi); }
+    .map-header .sec-title::after { background: rgba(139,105,20,0.7); }
+
+    .map-wrap {
+      position: relative;
+      z-index: 1;
+      padding: 0 8px;
+    }
+
+    .map-note {
+      padding: 20px 32px 0;
+      font-size: 11px;
+      color: rgba(214,228,208,0.4);
+      letter-spacing: 0.1em;
+      text-align: center;
+      line-height: 2.2;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── TIMELINE ──────────────────────────────── */
+    .tl-sec { background: var(--washi-dark); overflow: hidden; }
+
+    .tl-sec::before {
+      content: '刻';
+      position: absolute;
+      right: -12px; top: 10px;
+      font-size: 180px;
+      font-weight: 900;
+      color: rgba(128,195,66,0.065);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .timeline { position: relative; padding-left: 20px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--moss), rgba(74,103,65,0.15));
+    }
+
+    .tl-item { position: relative; padding: 0 0 36px 28px; }
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -5px; top: 6px;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      background: var(--washi-dark);
+      border: 1.5px solid var(--moss);
+    }
+    .tl-dot.active { background: var(--moss); }
+
+    .tl-time { font-size: 12px; color: var(--moss); letter-spacing: 0.12em; margin-bottom: 4px; font-weight: 600; }
+    .tl-event { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+    .tl-detail { font-size: 12px; color: var(--smoke); line-height: 1.9; }
+
+    /* ─── FOOTER ────────────────────────────────── */
+    .footer {
+      background: var(--ink);
+      padding: 72px 32px 56px;
+      text-align: center;
+    }
+
+    .hanko {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px; height: 60px;
+      border: 2px solid var(--moss-light);
+      border-radius: 4px;
+      color: var(--moss-light);
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 28px;
+      transform: rotate(-10deg);
+    }
+
+    .footer-title { font-size: 18px; color: var(--washi); font-weight: 600; letter-spacing: 0.12em; margin-bottom: 10px; }
+    .footer-date  { font-size: 13px; color: rgba(139,105,20,0.65); letter-spacing: 0.35em; margin-bottom: 40px; }
+    .footer-rule  { width: 40px; height: 1px; background: rgba(139,105,20,0.25); margin: 0 auto 36px; }
+    .footer-copy  { font-size: 10px; color: rgba(240,234,216,0.25); letter-spacing: 0.25em; }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ─────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-frame"></div>
+  <div class="hero-inner">
+    <h1 class="hero-title-v">山手線<br>双<span>六</span></h1>
+    <div class="hero-info">
+      <p class="hero-edition">第二回</p>
+      <div class="hero-divider-h"></div>
+      <div class="hero-date-block">
+        <p class="hero-date">2026.06.27</p>
+        <p class="hero-time">10:00 — 20:00</p>
+        <p class="hero-start">START : 東京駅</p>
+      </div>
+    </div>
+  </div>
+  <p class="hero-scroll">SCROLL</p>
+</section>
+
+<!-- ── MEMORY ────────────────────────────────────── -->
+<section class="section memory">
+  <p class="sec-label">Memory</p>
+  <h2 class="sec-title">前回の記憶</h2>
+
+  <p class="memory-copy">
+    あの日、僕たちは<br>
+    サイコロを振って<br>
+    東京を回った。<br>
+    あれから、一年が経った。<br>
+    また、あの興奮を。<br><br>
+    <em>そして、今年こそ<br>
+    ゴールへ。</em>
+  </p>
+
+  <div class="memory-photos">
+    <div class="photo-slot wide">
+      <img src="Image/A00872_0012.JPG" alt="前回の総武線双六">
+    </div>
+    <div class="photo-slot">
+      <img src="Image/A00872_0014.jpg" alt="地下道を歩くメンバー">
+    </div>
+    <div class="photo-slot">
+      <img src="Image/A00872_0021.jpg" alt="わたがしとサイコロ">
+    </div>
+  </div>
+
+  <p class="memory-caption">— 第1回総武線双六 より</p>
+</section>
+
+<!-- ── RULES ──────────────────────────────────────── -->
+<section class="section rules">
+  <p class="sec-label">Rules</p>
+  <h2 class="sec-title">遊び方</h2>
+
+  <div class="rule-list">
+    <div class="rule-item">
+      <div class="rule-num">一</div>
+      <div class="rule-body">
+        <p class="rule-head">東京駅を出発せよ</p>
+        <p class="rule-desc">スタートは東京駅。山手線を一周し、東京駅に戻ればゴール。</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-num">二</div>
+      <div class="rule-body">
+        <p class="rule-head">サイコロが道を決める</p>
+        <p class="rule-desc">出た目の数だけ次の駅へ進む。選択の余地はない。</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-num">三</div>
+      <div class="rule-body">
+        <p class="rule-head">駅での滞在時間</p>
+        <p class="rule-desc">到着した駅では「サイコロの目 × 15分」滞在する。何をするかはあなた次第。</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-num">四</div>
+      <div class="rule-body">
+        <p class="rule-head">奇数か、偶数か</p>
+        <p class="rule-desc">振る前に「奇数」か「偶数」を宣言できる。的中すれば ＋2駅 進む。</p>
+        <span class="rule-badge">ボーナス</span>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-num">五</div>
+      <div class="rule-body">
+        <p class="rule-head">一人一回の特権</p>
+        <p class="rule-desc">サイコロの振り直し、または滞在時間の延長——どちらか一方を、一度だけ行使できる。</p>
+        <span class="rule-badge">特殊アクション</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAP ───────────────────────────────────────── -->
+<section class="map-sec">
+  <div class="map-header">
+    <p class="sec-label">Course</p>
+    <h2 class="sec-title">山手線コース</h2>
+  </div>
+
+  <div class="map-wrap">
+    <!--
+      Center (210,210), dot radius 140, text radius 168
+      30 stations, 12° apart — Tokyo at BOTTOM (90°), clockwise (右回り)
+      Order: 東京(90°) → 神田(78°) → 秋葉原(66°) → ... → 有楽町(102°→left)
+      Right half (78° to -78°): text-anchor="start"   Top (-90°/270°): middle   Left half (-102° to 102°): text-anchor="end"
+    -->
+    <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+
+      <!-- Glow ring -->
+      <circle cx="210" cy="210" r="140" fill="none" stroke="rgba(90,155,40,0.15)" stroke-width="24"/>
+      <!-- Main line -->
+      <circle cx="210" cy="210" r="140" fill="none" stroke="#5A9B28" stroke-width="3"/>
+
+      <!-- ── Stations: 東京 bottom, 右回り ── -->
+
+      <!-- 0. 東京 90° | dot(210,350) -->
+      <circle cx="210" cy="350" r="8" fill="#BF3A22" stroke="#F0EAD8" stroke-width="2"/>
+      <text x="210" y="379" fill="#F0EAD8" font-size="11" font-family="Noto Serif JP,serif" font-weight="700" text-anchor="middle">東京</text>
+      <text x="210" y="394" fill="rgba(191,58,34,0.75)" font-size="8" font-family="Noto Serif JP,serif" text-anchor="middle">START / GOAL</text>
+
+      <!-- 1. 神田 78° | dot(239,347) | text(245,374) START -->
+      <circle cx="239" cy="347" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="245" y="374" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">神田</text>
+
+      <!-- 2. 秋葉原 66° | dot(267,338) | text(278,363) START -->
+      <circle cx="267" cy="338" r="4.5" fill="rgba(240,234,216,0.75)"/>
+      <text x="278" y="363" fill="rgba(240,234,216,0.8)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">秋葉原</text>
+
+      <!-- 3. 御徒町 54° | dot(292,323) | text(309,346) START -->
+      <circle cx="292" cy="323" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="309" y="346" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">御徒町</text>
+
+      <!-- 4. 上野 42° | dot(314,304) | text(335,322) START -->
+      <circle cx="314" cy="304" r="5.5" fill="rgba(240,234,216,0.82)"/>
+      <text x="335" y="322" fill="rgba(240,234,216,0.88)" font-size="10" font-family="Noto Serif JP,serif" text-anchor="start" font-weight="600">上野</text>
+
+      <!-- 5. 鶯谷 30° | dot(331,280) | text(355,294) START -->
+      <circle cx="331" cy="280" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="355" y="294" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">鶯谷</text>
+
+      <!-- 6. 日暮里 18° | dot(343,253) | text(370,262) START -->
+      <circle cx="343" cy="253" r="4" fill="rgba(240,234,216,0.7)"/>
+      <text x="370" y="262" fill="rgba(240,234,216,0.75)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">日暮里</text>
+
+      <!-- 7. 西日暮里 6° | dot(349,225) | text(377,228) START -->
+      <circle cx="349" cy="225" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="377" y="228" fill="rgba(240,234,216,0.65)" font-size="8.5" font-family="Noto Serif JP,serif" text-anchor="start">西日暮里</text>
+
+      <!-- 8. 田端 -6°(354°) | dot(349,195) | text(377,192) START -->
+      <circle cx="349" cy="195" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="377" y="192" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">田端</text>
+
+      <!-- 9. 駒込 -18°(342°) | dot(343,167) | text(370,158) START -->
+      <circle cx="343" cy="167" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="370" y="158" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">駒込</text>
+
+      <!-- 10. 巣鴨 -30°(330°) | dot(331,140) | text(355,126) START -->
+      <circle cx="331" cy="140" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="355" y="126" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">巣鴨</text>
+
+      <!-- 11. 大塚 -42°(318°) | dot(314,116) | text(335,98) START -->
+      <circle cx="314" cy="116" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="335" y="98" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">大塚</text>
+
+      <!-- 12. 池袋 -54°(306°) | dot(292,97) | text(309,74) START -->
+      <circle cx="292" cy="97" r="5.5" fill="rgba(240,234,216,0.82)"/>
+      <text x="309" y="74" fill="rgba(240,234,216,0.88)" font-size="10" font-family="Noto Serif JP,serif" text-anchor="start" font-weight="600">池袋</text>
+
+      <!-- 13. 目白 -66°(294°) | dot(267,82) | text(278,57) START -->
+      <circle cx="267" cy="82" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="278" y="57" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">目白</text>
+
+      <!-- 14. 高田馬場 -78°(282°) | dot(239,73) | text(245,46) START -->
+      <circle cx="239" cy="73" r="4" fill="rgba(240,234,216,0.7)"/>
+      <text x="245" y="46" fill="rgba(240,234,216,0.75)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="start">高田馬場</text>
+
+      <!-- 15. 新大久保 -90°(270°) TOP | dot(210,70) | text(210,42) MIDDLE -->
+      <circle cx="210" cy="70" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="210" y="42" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="middle">新大久保</text>
+
+      <!-- 16. 新宿 -102°(258°) | dot(181,73) | text(175,46) END -->
+      <circle cx="181" cy="73" r="6" fill="rgba(240,234,216,0.88)"/>
+      <text x="175" y="46" fill="rgba(240,234,216,0.92)" font-size="10" font-family="Noto Serif JP,serif" text-anchor="end" font-weight="600">新宿</text>
+
+      <!-- 17. 代々木 -114°(246°) | dot(153,82) | text(142,57) END -->
+      <circle cx="153" cy="82" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="142" y="57" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">代々木</text>
+
+      <!-- 18. 原宿 -126°(234°) | dot(128,97) | text(111,74) END -->
+      <circle cx="128" cy="97" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="111" y="74" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">原宿</text>
+
+      <!-- 19. 渋谷 -138°(222°) | dot(106,116) | text(85,98) END -->
+      <circle cx="106" cy="116" r="5.5" fill="rgba(240,234,216,0.82)"/>
+      <text x="85" y="98" fill="rgba(240,234,216,0.88)" font-size="10" font-family="Noto Serif JP,serif" text-anchor="end" font-weight="600">渋谷</text>
+
+      <!-- 20. 恵比寿 -150°(210°) | dot(89,140) | text(65,126) END -->
+      <circle cx="89" cy="140" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="65" y="126" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">恵比寿</text>
+
+      <!-- 21. 目黒 -162°(198°) | dot(77,167) | text(50,158) END -->
+      <circle cx="77" cy="167" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="50" y="158" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">目黒</text>
+
+      <!-- 22. 五反田 -174°(186°) | dot(71,195) | text(43,192) END -->
+      <circle cx="71" cy="195" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="43" y="192" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">五反田</text>
+
+      <!-- 23. 大崎 174° | dot(71,225) | text(43,228) END -->
+      <circle cx="71" cy="225" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="43" y="228" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">大崎</text>
+
+      <!-- 24. 品川 162° | dot(77,253) | text(50,262) END -->
+      <circle cx="77" cy="253" r="5.5" fill="rgba(240,234,216,0.82)"/>
+      <text x="50" y="262" fill="rgba(240,234,216,0.88)" font-size="10" font-family="Noto Serif JP,serif" text-anchor="end" font-weight="600">品川</text>
+
+      <!-- 25. 高輪GW 150° | dot(89,280) | text(65,294) END -->
+      <circle cx="89" cy="280" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="65" y="294" fill="rgba(240,234,216,0.6)" font-size="8.5" font-family="Noto Serif JP,serif" text-anchor="end">高輪GW</text>
+
+      <!-- 26. 田町 138° | dot(106,304) | text(85,322) END -->
+      <circle cx="106" cy="304" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="85" y="322" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">田町</text>
+
+      <!-- 27. 浜松町 126° | dot(128,323) | text(111,346) END -->
+      <circle cx="128" cy="323" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="111" y="346" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">浜松町</text>
+
+      <!-- 28. 新橋 114° | dot(153,338) | text(142,363) END -->
+      <circle cx="153" cy="338" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="142" y="363" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">新橋</text>
+
+      <!-- 29. 有楽町 102° | dot(181,347) | text(175,374) END -->
+      <circle cx="181" cy="347" r="3.5" fill="rgba(240,234,216,0.6)"/>
+      <text x="175" y="374" fill="rgba(240,234,216,0.65)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="end">有楽町</text>
+
+      <!-- Center label -->
+      <text x="210" y="204" fill="rgba(200,240,150,0.55)" font-size="15" font-family="Noto Serif JP,serif" text-anchor="middle" font-weight="600">30駅</text>
+      <text x="210" y="224" fill="rgba(200,240,150,0.3)" font-size="9" font-family="Noto Serif JP,serif" text-anchor="middle">Yamanote Line</text>
+    </svg>
+  </div>
+
+  <p class="map-note">山手線全30駅を舞台に<br>運命のサイコロが行き先を決める</p>
+</section>
+
+<!-- ── TIMELINE ───────────────────────────────────── -->
+<section class="section tl-sec">
+  <p class="sec-label">Schedule</p>
+  <h2 class="sec-title">当日の流れ</h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot active"></div>
+      <p class="tl-time">10:00</p>
+      <p class="tl-event">集合・出発</p>
+      <p class="tl-detail">東京駅にて集合。ルール確認後、最初のサイコロを振る。</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-time">10:00 — 20:00</p>
+      <p class="tl-event">双六本番</p>
+      <p class="tl-detail">山手線を巡りながら、各駅で滞在・探索・飲食を楽しむ。</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-time">20:00</p>
+      <p class="tl-event">タイムアップ</p>
+      <p class="tl-detail">制限時間終了。到達した駅でゲームを締める。</p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-time">20:00 〜</p>
+      <p class="tl-event">打ち上げ</p>
+      <p class="tl-detail">どこかの駅周辺で打ち上げ。今日の冒険を肴に一杯。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer class="footer">
+  <div class="hanko">双六</div>
+  <p class="footer-title">山手線双六 2026</p>
+  <p class="footer-date">2026.06.27 SAT</p>
+  <div class="footer-rule"></div>
+  <p class="footer-copy">第2回山手線双六実行委員会</p>
+</footer>
+
+</body>
+</html>
